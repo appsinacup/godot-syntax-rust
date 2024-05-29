@@ -1,0 +1,23 @@
+[package]
+name = "rust_syntax"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.77.1"
+license = "MPL-2.0"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+godot = { git = "https://github.com/godot-rust/gdext", branch = "master", features=["debug-log"] }
+
+[profile.release]
+codegen-units = 1
+lto = "fat"
+
+[profile.dev]
+split-debuginfo = "unpacked"
+
+[profile.dev.build-override]
+opt-level = 3
