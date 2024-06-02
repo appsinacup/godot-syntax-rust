@@ -37,6 +37,6 @@ unsafe impl ExtensionLibrary for RustSyntaxExtensionLibrary {
     }
 
     fn override_hot_reload() -> Option<bool> {
-        Some(false)
+        Some(true)
     }
 }

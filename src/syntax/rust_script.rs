@@ -10,7 +10,7 @@ pub struct RustScript {
 
 #[godot_api]
 impl IScriptExtension for RustScript {
-
+/*
     fn editor_can_reload_from_file(&mut self,) -> bool {
         unimplemented !()
     }
@@ -131,4 +131,5 @@ impl IScriptExtension for RustScript {
     fn setup_local_to_scene(&mut self,) {
         unimplemented !()
     }
+    */
 }
