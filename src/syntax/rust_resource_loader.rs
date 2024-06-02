@@ -1,18 +1,18 @@
 use godot::{engine::{file_access::ModeFlags, global::Error, resource_saver::SaverFlags, FileAccess, IResourceFormatLoader, ResourceFormatLoader}, prelude::*};
 
-use super::rust_script::RustScript;
+use super::rust_script::Rust;
 use godot::prelude::*;
 
 #[derive(GodotClass)]
 #[class(base=ResourceFormatLoader,tool,init)]
-pub struct RustResourceFormatLoader {
+pub struct RustResourceLoader {
     base: Base<ResourceFormatLoader>,
 }
 
 #[godot_api]
-impl IResourceFormatLoader for RustResourceFormatLoader {
+impl IResourceFormatLoader for RustResourceLoader {
     fn load(&self, path: GString, original_path: GString, use_sub_threads: bool, cache_mode: i32,) -> Variant {
-        let mut rust_script = RustScript::new_gd();
+        let mut rust_script = Rust::new_gd();
         let mut handle = match FileAccess::open(path, ModeFlags::READ) {
             Some(handle) => handle,
             None => {
@@ -28,9 +28,9 @@ impl IResourceFormatLoader for RustResourceFormatLoader {
         array
     }
     fn handles_type(&self, type_: StringName,) -> bool {
-        type_.to_string() == "RustScript"
+        type_ == "Rust".into()
     }
-    fn get_resource_type(&self, path: GString) -> godot::prelude::GString {
-        "RustScript".into()
+    fn get_resource_type(&self, path: GString,) -> GString {
+        "Rust".into()
     }
 }

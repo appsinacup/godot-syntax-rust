@@ -10,7 +10,7 @@ publish = false
 crate-type = ["cdylib"]
 
 [dependencies]
-godot = { git = "https://github.com/godot-rust/gdext", branch = "master", features=["debug-log"] }
+godot = { git = "https://github.com/godot-rust/gdext", branch = "master", features=["debug-log", "experimental-threads"] }
 
 [profile.release]
 codegen-units = 1
