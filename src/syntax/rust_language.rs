@@ -100,7 +100,76 @@ impl IScriptLanguageExtension for RustLanguage {
     }
 
     fn get_reserved_words(&self) -> PackedStringArray {
-        PackedStringArray::new()
+        let mut words = PackedStringArray::new();
+        // reserved words from rust
+        // https://doc.rust-lang.org/reference/keywords.html
+        // Strict keywords
+        words.push("as".into());
+        words.push("break".into());
+        words.push("const".into());
+        words.push("continue".into());
+        words.push("crate".into());
+        words.push("else".into());
+        words.push("enum".into());
+        words.push("extern".into());
+        words.push("false".into());
+        words.push("fn".into());
+        words.push("for".into());
+        words.push("if".into());
+        words.push("impl".into());
+        words.push("in".into());
+        words.push("let".into());
+        words.push("loop".into());
+        words.push("match".into());
+        words.push("mod".into());
+        words.push("move".into());
+        words.push("mut".into());
+        words.push("pub".into());
+        words.push("ref".into());
+        words.push("return".into());
+        words.push("self".into());
+        words.push("Self".into());
+        words.push("static".into());
+        words.push("struct".into());
+        words.push("super".into());
+        words.push("trait".into());
+        words.push("true".into());
+        words.push("type".into());
+        words.push("unsafe".into());
+        words.push("use".into());
+        words.push("where".into());
+        words.push("while".into());
+
+        words.push("async".into());
+        words.push("await".into());
+        words.push("dyn".into());
+        // Reserved
+        words.push("abstract".into());
+        words.push("become".into());
+        words.push("box".into());
+        words.push("do".into());
+        words.push("final".into());
+        words.push("macro".into());
+        words.push("override".into());
+        words.push("priv".into());
+        words.push("typeof".into());
+        words.push("unsized".into());
+        words.push("virtual".into());
+        words.push("yield".into());
+
+        words.push("try".into());
+        return words;
+    }
+
+    fn is_control_flow_keyword(&self, keyword: GString,) -> bool {
+        // List of control flow keywords in Rust
+        let control_flow_keywords = [
+            "if", "else", "loop", "while", "for", "match",
+            "break", "continue", "return", "yield",
+        ];
+
+        // Check if the provided keyword is in the list of control flow keywords
+        control_flow_keywords.contains(&keyword.to_string().as_str())
     }
 
     fn get_global_class_name(&self, path: GString) -> Dictionary {
@@ -145,8 +214,12 @@ impl IScriptLanguageExtension for RustLanguage {
 
         validation.insert("valid", "true");
         validation.insert("errors", VariantArray::new());
-        validation.insert("functions", VariantArray::new());
-        validation.insert("warnings", VariantArray::new());
+        let mut functions = VariantArray::new();
+        functions.push("test".to_variant());
+        validation.insert("functions", functions);
+        let mut warnings = VariantArray::new();
+        warnings.push("warning1".to_variant());
+        validation.insert("warnings", warnings);
 
         validation
     }

@@ -1,6 +1,6 @@
 use godot::{engine::{file_access::ModeFlags, global::Error, resource_saver::SaverFlags, FileAccess, IResourceFormatSaver, ResourceFormatSaver}, prelude::*};
 
-use super::rust_script::Rust;
+use crate::syntax::rust_script::Rust;
 
 #[derive(GodotClass)]
 #[class(base=ResourceFormatSaver,tool,init)]

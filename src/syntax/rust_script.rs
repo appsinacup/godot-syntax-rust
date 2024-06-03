@@ -24,6 +24,7 @@ impl IScriptExtension for Rust {
     }
     fn set_source_code(&mut self, code: GString) {
         self.source_code = code;
+        godot_print!("update");
     }
 
     fn get_language(&self) -> Option<Gd<ScriptLanguage>> {
@@ -53,6 +54,10 @@ impl IScriptExtension for Rust {
 
     fn has_property_default_value(&self, _property: StringName) -> bool {
         false
+    }
+
+    fn is_abstract(&self) -> bool {
+        true
     }
 
 

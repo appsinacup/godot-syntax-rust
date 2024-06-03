@@ -1,5 +1,9 @@
 extends Node
 
+class test:
+	var a: int
+	func abc():
+		pass
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -1,7 +1,8 @@
 use godot::{engine::{file_access::ModeFlags, global::Error, resource_saver::SaverFlags, FileAccess, IResourceFormatLoader, ResourceFormatLoader}, prelude::*};
 
-use super::rust_script::Rust;
 use godot::prelude::*;
+
+use super::rust_script::Rust;
 
 #[derive(GodotClass)]
 #[class(base=ResourceFormatLoader,tool,init)]
@@ -20,6 +21,7 @@ impl IResourceFormatLoader for RustResourceLoader {
             }
         };
         //let _ = rust_script.load(&mut handle, original_path, use_sub_threads, cache_mode);
+        rust_script.set_source_code(handle.get_as_text());
         rust_script.to_variant()
     }
     fn get_recognized_extensions(&self,) -> PackedStringArray {
