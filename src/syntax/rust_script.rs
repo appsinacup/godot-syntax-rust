@@ -1,6 +1,5 @@
-use std::ffi::c_void;
 
-use godot::{engine::{global::Error, Engine, IScriptExtension, Script, ScriptExtension, ScriptLanguage}, prelude::*};
+use godot::{engine::{Engine, IScriptExtension, Script, ScriptExtension, ScriptLanguage}, prelude::*};
 
 use super::rust_language::RustLanguage;
 
@@ -24,7 +23,6 @@ impl IScriptExtension for Rust {
     }
     fn set_source_code(&mut self, code: GString) {
         self.source_code = code;
-        godot_print!("update");
     }
 
     fn get_language(&self) -> Option<Gd<ScriptLanguage>> {
@@ -60,8 +58,8 @@ impl IScriptExtension for Rust {
         true
     }
 
-
-    fn update_exports(&mut self) {}
+    fn update_exports(&mut self) {
+    }
 
     fn get_constants(&self) -> Dictionary {
         Dictionary::new()

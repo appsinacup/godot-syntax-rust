@@ -1,4 +1,4 @@
-use std::sync::{Mutex, Once};
+use std::sync::Once;
 
 use godot::{engine::{Engine, ResourceLoader, ResourceSaver}, prelude::*};
 use syntax::{rust_language::RustLanguage, rust_resource_loader::RustResourceLoader, rust_resource_saver::RustResourceSaver};
@@ -30,8 +30,7 @@ unsafe impl ExtensionLibrary for RustSyntaxExtensionLibrary {
     }
     fn on_level_init(level: InitLevel) {
         godot_print!("hello world");
-        match level {
-            InitLevel::Scene => {
+        if level == InitLevel::Scene {
         
                 let res_loader = get_instance();
                 let res_saver = RustResourceSaver::new_gd();
@@ -58,8 +57,6 @@ unsafe impl ExtensionLibrary for RustSyntaxExtensionLibrary {
                     res_loader.clone().upcast(),
                 );
             }
-            _ => (),
-        }
     }
 
     fn on_level_deinit(level: InitLevel) {

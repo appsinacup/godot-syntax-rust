@@ -1,6 +1,6 @@
-use godot::{engine::{global::Error, Engine, IScriptLanguageExtension, Script, ScriptLanguageExtension}, prelude::*};
+use godot::{engine::{Engine, IScriptLanguageExtension, Script, ScriptLanguageExtension}, prelude::*};
 
-use super::rust_script::Rust;
+use super::{rust_script::Rust, rust_validation::{run_checks}};
 
 #[derive(GodotClass)]
 #[class(base=ScriptLanguageExtension,tool,init)]
@@ -32,13 +32,11 @@ impl IScriptLanguageExtension for RustLanguage {
     }
 
     fn supports_documentation(&self) -> bool {
-        false
+        true
     }
 
-    /// thread enter hook will be called before entering a thread
     fn thread_enter(&mut self) {}
 
-    /// thread exit hook will be called before leaving a thread
     fn thread_exit(&mut self) {}
 
     fn get_public_functions(&self) -> Array<Dictionary> {
@@ -81,7 +79,6 @@ impl IScriptLanguageExtension for RustLanguage {
         false
     }
 
-    /// validate that the path of a new rust script is valid. Constraints for script locations can be enforced here.
     fn validate_path(&self, path: GString) -> GString {
         GString::new()
     }
@@ -101,91 +98,30 @@ impl IScriptLanguageExtension for RustLanguage {
 
     fn get_reserved_words(&self) -> PackedStringArray {
         let mut words = PackedStringArray::new();
-        // reserved words from rust
-        // https://doc.rust-lang.org/reference/keywords.html
-        // Strict keywords
-        words.push("as".into());
-        words.push("break".into());
-        words.push("const".into());
-        words.push("continue".into());
-        words.push("crate".into());
-        words.push("else".into());
-        words.push("enum".into());
-        words.push("extern".into());
-        words.push("false".into());
-        words.push("fn".into());
-        words.push("for".into());
-        words.push("if".into());
-        words.push("impl".into());
-        words.push("in".into());
-        words.push("let".into());
-        words.push("loop".into());
-        words.push("match".into());
-        words.push("mod".into());
-        words.push("move".into());
-        words.push("mut".into());
-        words.push("pub".into());
-        words.push("ref".into());
-        words.push("return".into());
-        words.push("self".into());
-        words.push("Self".into());
-        words.push("static".into());
-        words.push("struct".into());
-        words.push("super".into());
-        words.push("trait".into());
-        words.push("true".into());
-        words.push("type".into());
-        words.push("unsafe".into());
-        words.push("use".into());
-        words.push("where".into());
-        words.push("while".into());
-
-        words.push("async".into());
-        words.push("await".into());
-        words.push("dyn".into());
-        // Reserved
-        words.push("abstract".into());
-        words.push("become".into());
-        words.push("box".into());
-        words.push("do".into());
-        words.push("final".into());
-        words.push("macro".into());
-        words.push("override".into());
-        words.push("priv".into());
-        words.push("typeof".into());
-        words.push("unsized".into());
-        words.push("virtual".into());
-        words.push("yield".into());
-
-        words.push("try".into());
-        return words;
+        // Reserved words from Rust
+        let reserved_words = [
+            "as", "break", "const", "continue", "crate", "else", "enum", "extern", "false", "fn",
+            "for", "if", "impl", "in", "let", "loop", "match", "mod", "move", "mut", "pub", "ref",
+            "return", "self", "Self", "static", "struct", "super", "trait", "true", "type", "unsafe",
+            "use", "where", "while", "async", "await", "dyn", "abstract", "become", "box", "do",
+            "final", "macro", "override", "priv", "typeof", "unsized", "virtual", "yield", "try"
+        ];
+        for word in reserved_words.iter() {
+            words.push((*word).into());
+        }
+        words
     }
 
     fn is_control_flow_keyword(&self, keyword: GString,) -> bool {
-        // List of control flow keywords in Rust
         let control_flow_keywords = [
             "if", "else", "loop", "while", "for", "match",
             "break", "continue", "return", "yield",
         ];
 
-        // Check if the provided keyword is in the list of control flow keywords
         control_flow_keywords.contains(&keyword.to_string().as_str())
     }
 
     fn get_global_class_name(&self, path: GString) -> Dictionary {
-        /*
-        let class_name = Self::path_to_class_name(&path);
-
-        let Some(script) = Self::script_meta_data(&class_name) else {
-            return Dictionary::new();
-        };
-
-        Dictionary::new().apply(|dict| {
-            dict.set("name", class_name);
-            dict.set("base_type", script.base_type_name());
-        })
-         */
-
         Dictionary::new()
     }
 
@@ -204,21 +140,24 @@ impl IScriptLanguageExtension for RustLanguage {
     fn validate(
         &self,
         _script: GString,
-        _path: GString,
+        path: GString,
         _validate_functions: bool,
         _validate_errors: bool,
         _validate_warnings: bool,
         _validate_safe_lines: bool,
     ) -> Dictionary {
         let mut validation = Dictionary::new();
-
-        validation.insert("valid", "true");
-        validation.insert("errors", VariantArray::new());
-        let mut functions = VariantArray::new();
-        functions.push("test".to_variant());
+        godot_print!("{}", path.to_string());
+        let errors = run_checks(path.to_string(), "error".to_string());
+        if !errors.is_empty() {
+            validation.insert("valid", "false");
+        } else {
+            validation.insert("valid", "true");
+        }
+        validation.insert("errors", errors);
+        let functions = VariantArray::new();
         validation.insert("functions", functions);
-        let mut warnings = VariantArray::new();
-        warnings.push("warning1".to_variant());
+        let warnings = run_checks(path.to_string(), "warning".to_string());
         validation.insert("warnings", warnings);
 
         validation
@@ -229,7 +168,8 @@ impl IScriptLanguageExtension for RustLanguage {
     }
 
     // godot hook to trigger script reload
-    fn reload_all_scripts(&mut self) {}
+    fn reload_all_scripts(&mut self) {
+    }
 
     fn frame(&mut self) {
     }
