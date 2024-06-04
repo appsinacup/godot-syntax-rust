@@ -5,6 +5,8 @@ use super::{rust_script::Rust, rust_validation::{run_checks}};
 #[derive(GodotClass)]
 #[class(base=ScriptLanguageExtension,tool,init)]
 pub struct RustLanguage {
+    current_id: u32,
+
     base: Base<ScriptLanguageExtension>,
 }
 
@@ -146,8 +148,8 @@ impl IScriptLanguageExtension for RustLanguage {
         _validate_warnings: bool,
         _validate_safe_lines: bool,
     ) -> Dictionary {
+        
         let mut validation = Dictionary::new();
-        godot_print!("{}", path.to_string());
         let errors = run_checks(path.to_string(), "error".to_string());
         if !errors.is_empty() {
             validation.insert("valid", "false");
@@ -159,7 +161,7 @@ impl IScriptLanguageExtension for RustLanguage {
         validation.insert("functions", functions);
         let warnings = run_checks(path.to_string(), "warning".to_string());
         validation.insert("warnings", warnings);
-
+        
         validation
     }
 

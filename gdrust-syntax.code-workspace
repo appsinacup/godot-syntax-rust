@@ -51,7 +51,7 @@
 		"configurations": [
 			{
 				"name": "Launch",
-				"program": "${workspaceFolder:godot}/bin/godot.macos.editor.dev.arm64",
+				"program": "${workspaceFolder:godot}/bin/godot.macos.editor.arm64",
 				"type": "cppdbg",
 				"request": "launch",
 				"cwd": "${workspaceFolder:gdrust-syntax}",
@@ -67,7 +67,7 @@
 			},
 			{
 				"name": "Launch Editor",
-				"program": "${workspaceFolder:godot}/bin/godot.macos.editor.dev.arm64",
+				"program": "${workspaceFolder:godot}/bin/godot.macos.editor.arm64",
 				"type": "cppdbg",
 				"request": "launch",
 				"cwd": "${workspaceFolder:gdrust-syntax}",
@@ -75,7 +75,7 @@
 					"MIMode": "lldb"
 				},
 				"args": [
-					"/Users/dragosdaian/Documents/GitHub/gdrust-syntax/demo/project.godot"
+					"${workspaceFolder:gdrust-syntax}/demo/project.godot"
 				]
 			},
 		]
