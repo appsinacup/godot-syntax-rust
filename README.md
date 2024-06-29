@@ -1,6 +1,10 @@
 # Rust Syntax for Godot
 
 <p align="center">
+<img src="https://github.com/appsinacup/gdrust-syntax/blob/main/syntax.png?raw=true"/>
+</p>
+
+<p align="center">
         <img src="https://github.com/appsinacup/gdrust-syntax/actions/workflows/runner.yml/badge.svg?branch=main"
             alt="Godot Rust Syntax"></a>
         <img src="https://img.shields.io/badge/Godot-4.2-%23478cbf?logo=godot-engine&logoColor=white" />

@@ -1,3 +1,4 @@
+// Rust Syntax Inside Godot
 fn test1(){
 	let _a = "test";
 }
