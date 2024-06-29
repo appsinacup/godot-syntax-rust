@@ -1,4 +1,5 @@
 
 /target
+/demo/addons/rust-syntax/bin
 .DS_Store
 /demo/rust/target
