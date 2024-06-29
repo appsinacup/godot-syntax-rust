@@ -1,0 +1,41 @@
+name: 🐧 Linux Builds
+on:
+  workflow_call:
+
+jobs:
+  linux:
+    runs-on: ubuntu-20.04
+    name: ${{ matrix.arch }}
+    strategy:
+      fail-fast: false
+      matrix:
+        #arch: ["x86_64-unknown-linux-gnu", "i686-unknown-linux-gnu", "aarch64-unknown-linux-gnu"]
+        arch: ["x86_64-unknown-linux-gnu"]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Install dependencies"
+        shell: sh
+        run: |
+          sudo apt-get update
+          sudo apt-get install libunwind-dev
+          sudo apt-get install build-essential
+          sudo apt-get install pkg-config
+          sudo apt-get install libssl-dev
+          sudo apt-get install zlib1g-dev
+      - name: Build
+        uses: ./.github/actions/build
+        with:
+          arch: ${{ matrix.arch }}
+      - name: Copy to bin
+        shell: sh
+        run: |
+          mv target/release/librust-syntax.so demo/addons/rust-syntax/bin/librust_syntax.linux.so
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: rust-syntax-${{ matrix.arch}}
+          path: |
+            demo/**/*.so
+          if-no-files-found: error
+    

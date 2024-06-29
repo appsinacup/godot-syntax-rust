@@ -1,0 +1,43 @@
+name: 🍎 macOS Builds
+on:
+  workflow_call:
+
+jobs:
+  macos:
+    runs-on: "macos-latest"
+    name: ${{ matrix.arch }}
+    strategy:
+      fail-fast: false
+      matrix:
+        arch:  ["x86_64-apple-darwin"]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        uses: ./.github/actions/build
+        with:
+          arch: ${{ matrix.arch }}
+      - name: Copy to bin
+        shell: sh
+        run: |
+          mv target/release/librust_syntax.dylib demo/addons/rust-syntax/bin/librust_syntax.macos.framework/librust_syntax.macos.dylib
+      - name: Mac Sign
+        uses: ughuuu/godot-cpp-template/.github/actions/sign@add-more-stuff/options-to-build
+        with:
+          FRAMEWORK_PATH: demo/addons/rust-syntax/bin/librust_syntax.macos.framework
+          SIGN_FLAGS: "--deep"
+          APPLE_CERT_BASE64: ${{ secrets.APPLE_CERT_BASE64 }}
+          APPLE_CERT_PASSWORD: ${{ secrets.APPLE_CERT_PASSWORD }}
+          APPLE_DEV_PASSWORD: ${{ secrets.APPLE_DEV_PASSWORD }}
+          APPLE_DEV_ID: ${{ secrets.APPLE_DEV_ID }}
+          APPLE_DEV_TEAM_ID: ${{ secrets.APPLE_DEV_TEAM_ID }}
+          APPLE_DEV_APP_ID: ${{ secrets.APPLE_DEV_APP_ID }}
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: rust-syntax-${{ matrix.arch}}
+          path: |
+            demo/**/*.dylib
+            demo/**/CodeResources
+          if-no-files-found: error

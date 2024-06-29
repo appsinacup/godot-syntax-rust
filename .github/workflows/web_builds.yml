@@ -1,0 +1,53 @@
+name: 🌐 Web Builds
+on:
+  workflow_call:
+
+jobs:
+  web:
+    runs-on: ubuntu-20.04
+    name: ${{ matrix.arch }}
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: ["wasm32-unknown-emscripten"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Emscripten latest
+        uses: mymindstorm/setup-emsdk@v12
+        with:
+          #version: 3.1.61
+          version: 3.1.39
+          no-cache: false
+
+      - name: Verify Emscripten setup
+        run: |
+          emcc -v
+
+      - name: Rust Install Nightly
+        run: |
+          rustup toolchain install nightly
+          rustup override set nightly
+          #rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu
+          rustup component add rust-src --toolchain nightly
+          rustup target add wasm32-unknown-emscripten --toolchain nightly
+
+      - name: Build
+        uses: ./.github/actions/build
+        with:
+          arch: ${{ matrix.arch }}
+          extra_flags: "-Z build-std=panic_abort,std"
+          env_flags: "-C target-feature=+atomics,+bulk-memory"
+      - name: Copy to bin
+        shell: sh
+        run: |
+          mv target/release/rust_syntax.wasm demo/addons/rust-syntax/bin/librust_syntax.wasm
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: rust-syntax-${{ matrix.arch}}
+          path: |
+            demo/**/*.wasm
+          if-no-files-found: error
+    

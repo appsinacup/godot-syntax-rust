@@ -1,0 +1,43 @@
+name: 🍏 iOS Builds
+on:
+  workflow_call:
+
+jobs:
+  ios:
+    runs-on: "macos-latest"
+    name: ${{ matrix.arch }}
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: ["aarch64-apple-ios"]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        uses: ./.github/actions/build
+        with:
+          arch: ${{ matrix.arch }}
+      - name: Copy to bin
+        shell: sh
+        run: |
+          mv target/release/librust_syntax.dylib demo/addons/rust-syntax/bin/librust_syntax.ios.framework/librust_syntax.ios.dylib
+      - name: iOS Sign
+        shell: pwsh
+        env:
+          APPLE_CERT_BASE64: ${{ secrets.PROD_MACOS_CERTIFICATE }}
+          APPLE_CERT_PASSWORD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}
+          APPLE_DEV_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}
+          APPLE_DEV_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}
+          APPLE_DEV_PASSWORD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
+          APPLE_DEV_APP_ID: ${{ secrets.PROD_MACOS_APPLE_DEV_APP_ID }}
+        run: |
+          ./scripts/ci-sign-macos.ps1 demo/addons/rust-syntax/bin/librust_syntax.ios.framework/librust_syntax.ios.dylib
+        if: ${{ env.APPLE_DEV_ID }}
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: rust-syntax-${{ matrix.arch}}
+          path: |
+            demo/**/*.dylib
+          if-no-files-found: error

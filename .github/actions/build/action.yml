@@ -1,0 +1,51 @@
+name: Build
+description: Build
+
+inputs:
+  arch:
+    required: true
+    default: ''
+    description: Rust target platform.
+  extra_flags:
+    required: false
+    default: ''
+    description: Rust extra flags.
+  env_flags:
+    required: false
+    default: ''
+    description: RUSTFLAGS env var.
+
+runs:
+  using: composite
+  steps:
+    - name: Rust Install Nightly
+      shell: sh
+      run: |
+        rustup install nightly
+        rustup default nightly
+        rustup toolchain install nightly
+        rustup override set nightly
+        rustup component add rust-src --toolchain nightly
+        rustup target add ${{ inputs.arch }} --toolchain nightly
+    - name: Build
+      shell: sh
+      run: |
+        cargo +nightly build --target=${{ inputs.arch }} --release ${{ inputs.extra_flags}}
+      env:
+        RUSTFLAGS: ${{ inputs.env_flags }}
+        EMCC_CFLAGS: "-s ERROR_ON_UNDEFINED_SYMBOLS=0 --no-entry -gsource-map -s STANDALONE_WASM"
+    - name: Copy to release
+      shell: sh
+      run: |
+        mkdir -p target/release
+        rm -rf target/release
+        cp -rf target/${{ inputs.arch }}/release target/release
+    - name: Build Macos Universal
+      shell: sh
+      # we already built for x86_64-apple-darwin for mac, now build arm64
+      if: ${{ inputs.arch == 'x86_64-apple-darwin'}}
+      run: |
+        mkdir -p target/release
+        rustup target add aarch64-apple-darwin
+        cargo build --target=aarch64-apple-darwin --release --features="${{ inputs.features }}" --no-default-features
+        lipo -create -output target/release/librust_syntax.dylib target/aarch64-apple-darwin/release/librust_syntax.dylib target/x86_64-apple-darwin/release/librust_syntax.dylib

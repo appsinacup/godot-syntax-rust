@@ -1,0 +1,37 @@
+name: Release
+on:
+  workflow_call:
+
+jobs:
+  release:
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: rust-syntax-*
+          merge-multiple: true
+          path: rust-syntax
+          name: rust-syntax
+      - name: Delete draft release(s)
+        uses: hugo19941994/delete-draft-releases@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Archive
+        shell: sh
+        run: |
+          ls
+          zip -r "rust-syntax.zip" rust-syntax
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Rust Syntax Nightly
+          files: |
+            rust-syntax.zip
+          generate_release_notes: true
+          draft: true
+          prerelease: true
+          fail_on_unmatched_files: true
