@@ -30,7 +30,7 @@ runs:
     - name: Build
       shell: sh
       run: |
-        cargo +nightly build --target=${{ inputs.arch }} --release ${{ inputs.extra_flags}}
+        cargo build --target=${{ inputs.arch }} --release ${{ inputs.extra_flags}}
       env:
         RUSTFLAGS: ${{ inputs.env_flags }}
         EMCC_CFLAGS: "-s ERROR_ON_UNDEFINED_SYMBOLS=0 --no-entry -gsource-map -s STANDALONE_WASM"
