@@ -3,7 +3,7 @@
 Note: This is still WIP
 
 <p align="center">
-<img src="https://github.com/appsinacup/gdrust-syntax/blob/main/syntax.png?raw=true"/>
+<img src="https://github.com/appsinacup/gdrust-syntax/blob/main/syntax.png?raw=true" style="height:'512px'; width:'auto'"/>
 </p>
 
 <p align="center">
