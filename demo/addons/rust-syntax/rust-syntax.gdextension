@@ -6,22 +6,15 @@ compatibility_minimum = 4.2
 
 [libraries]
 
-macos.debug = "res://addons/rust-syntax/bin/librust_syntax.macos.template_release.dylib"
-macos.release = "res://addons/rust-syntax/bin/librust_syntax.macos.template_release.dylib"
-windows.debug.x86_64 = "res://addons/rust-syntax/bin/librust_syntax.windows.template_debug.x86_64.dll"
-windows.release.x86_64 = "res://addons/rust-syntax/bin/librust_syntax.windows.template_release.x86_64.dll"
-windows.debug.x86_32 = "res://addons/rust-syntax/bin/librust_syntax.windows.template_debug.x86_32.dll"
-windows.release.x86_32 = "res://addons/rust-syntax/bin/librust_syntax.windows.template_release.x86_32.dll"
-linux.debug.x86_64 = "res://addons/rust-syntax/bin/librust_syntax.linux.template_debug.x86_64.so"
-linux.release.x86_64 = "res://addons/rust-syntax/bin/librust_syntax.linux.template_release.x86_64.so"
-android.debug.x86_64 = "res://addons/rust-syntax/bin/librust_syntax.android.template_debug.x86_64.so"
-android.release.x86_64 = "res://addons/rust-syntax/bin/librust_syntax.android.template_release.x86_64.so"
-android.debug.arm64 = "res://addons/rust-syntax/bin/librust_syntax.android.template_debug.arm64.so"
-android.release.arm64 = "res://addons/rust-syntax/bin/librust_syntax.android.template_release.arm64.so"
-ios.debug = "res://addons/rust-syntax/bin/librust_syntax.ios.template_debug.arm64.framework"
-ios.release = "res://addons/rust-syntax/bin/librust_syntax.ios.template_release.arm64.framework"
-web.debug.wasm32 = "res://addons/rust-syntax/bin/librust_syntax.web.template_debug.wasm32.wasm"
-web.release.wasm32 = "res://addons/rust-syntax/bin/librust_syntax.web.template_release.wasm32.wasm"
+
+macos.debug = "bin/librust_syntax.macos.framework"
+macos.release = "bin/librust_syntax.macos.framework"
+windows.debug.x86_64 = "bin/librust_syntax.windows.x86_64-pc-windows-msvc.dll"
+windows.release.x86_64 = "bin/librust_syntax.windows.x86_64-pc-windows-msvc.dll"
+windows.debug.x86_32 = "bin/librust_syntax.windows.i686-pc-windows-msvc.dll"
+windows.release.x86_32 = "bin/librust_syntax.windows.i686-pc-windows-msvc.dll"
+linux.debug.x86_64 = "bin/librust_syntax.linux.x86_64-unknown-linux-gnu.so"
+linux.release.x86_64 = "bin/librust_syntax.linux.x86_64-unknown-linux-gnu.so"
 
 [icons]
 
