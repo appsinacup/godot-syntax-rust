@@ -6,7 +6,7 @@ compatibility_minimum = 4.2
 
 [libraries]
 
-macos.debug = "res://addons/rust-syntax/bin/librust-syntax.macos.template_release.dylib"
+macos.debug = "res://addons/rust-syntax/bin/librust_syntax.macos.template_release.dylib"
 macos.release = "res://addons/rust-syntax/bin/librust_syntax.macos.template_release.dylib"
 windows.debug.x86_64 = "res://addons/rust-syntax/bin/librust_syntax.windows.template_debug.x86_64.dll"
 windows.release.x86_64 = "res://addons/rust-syntax/bin/librust_syntax.windows.template_release.x86_64.dll"
