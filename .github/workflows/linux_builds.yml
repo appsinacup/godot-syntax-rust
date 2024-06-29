@@ -30,7 +30,7 @@ jobs:
       - name: Copy to bin
         shell: sh
         run: |
-          mv target/release/librust-syntax.so demo/addons/rust-syntax/bin/librust_syntax.linux.so
+          mv target/release/librust_syntax.so demo/addons/rust-syntax/bin/librust_syntax.linux.so
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
