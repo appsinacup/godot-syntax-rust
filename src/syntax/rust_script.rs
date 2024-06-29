@@ -1,8 +1,11 @@
-
-use godot::{engine::{Engine, IScriptExtension, Script, ScriptExtension, ScriptLanguage}, prelude::*};
+use godot::engine::Engine;
+use godot::engine::IScriptExtension;
+use godot::engine::Script;
+use godot::engine::ScriptExtension;
+use godot::engine::ScriptLanguage;
+use godot::prelude::*;
 
 use super::rust_language::RustLanguage;
-
 #[derive(GodotClass)]
 #[class(base=ScriptExtension,tool,init)]
 pub struct Rust {
@@ -11,7 +14,6 @@ pub struct Rust {
 
     base: Base<ScriptExtension>,
 }
-
 #[godot_api]
 impl IScriptExtension for Rust {
     fn get_global_name(&self) -> StringName {
@@ -21,13 +23,14 @@ impl IScriptExtension for Rust {
     fn get_source_code(&self) -> GString {
         self.source_code.clone()
     }
+
     fn set_source_code(&mut self, code: GString) {
         self.source_code = code;
     }
 
     fn get_language(&self) -> Option<Gd<ScriptLanguage>> {
-        let singleton = Engine::singleton()
-        .get_singleton(RustLanguage::class_name().to_string_name());
+        let singleton =
+            Engine::singleton().get_singleton(RustLanguage::class_name().to_string_name());
         if let Some(singleton) = singleton {
             return Some(singleton.cast());
         }
@@ -58,12 +61,12 @@ impl IScriptExtension for Rust {
         true
     }
 
-    fn update_exports(&mut self) {
-    }
+    fn update_exports(&mut self) {}
 
     fn get_constants(&self) -> Dictionary {
         Dictionary::new()
     }
+
     fn editor_can_reload_from_file(&mut self) -> bool {
         true
     }

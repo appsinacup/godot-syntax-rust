@@ -1,7 +1,11 @@
-use godot::{engine::{Engine, IScriptLanguageExtension, Script, ScriptLanguageExtension}, prelude::*};
+use godot::engine::Engine;
+use godot::engine::IScriptLanguageExtension;
+use godot::engine::Script;
+use godot::engine::ScriptLanguageExtension;
+use godot::prelude::*;
 
-use super::{rust_script::Rust, rust_validation::{run_checks}};
-
+use super::rust_script::Rust;
+use super::rust_validation::run_checks;
 #[derive(GodotClass)]
 #[class(base=ScriptLanguageExtension,tool,init)]
 pub struct RustLanguage {
@@ -9,7 +13,6 @@ pub struct RustLanguage {
 
     base: Base<ScriptLanguageExtension>,
 }
-
 impl RustLanguage {
     pub fn singleton() -> Option<Gd<Self>> {
         Engine::singleton()
@@ -17,10 +20,8 @@ impl RustLanguage {
             .map(|gd| gd.cast())
     }
 }
-
 #[godot_api]
 impl IScriptLanguageExtension for RustLanguage {
-
     fn get_name(&self) -> GString {
         GString::from("Rust")
     }
@@ -104,9 +105,10 @@ impl IScriptLanguageExtension for RustLanguage {
         let reserved_words = [
             "as", "break", "const", "continue", "crate", "else", "enum", "extern", "false", "fn",
             "for", "if", "impl", "in", "let", "loop", "match", "mod", "move", "mut", "pub", "ref",
-            "return", "self", "Self", "static", "struct", "super", "trait", "true", "type", "unsafe",
-            "use", "where", "while", "async", "await", "dyn", "abstract", "become", "box", "do",
-            "final", "macro", "override", "priv", "typeof", "unsized", "virtual", "yield", "try"
+            "return", "self", "Self", "static", "struct", "super", "trait", "true", "type",
+            "unsafe", "use", "where", "while", "async", "await", "dyn", "abstract", "become",
+            "box", "do", "final", "macro", "override", "priv", "typeof", "unsized", "virtual",
+            "yield", "try",
         ];
         for word in reserved_words.iter() {
             words.push((*word).into());
@@ -114,12 +116,10 @@ impl IScriptLanguageExtension for RustLanguage {
         words
     }
 
-    fn is_control_flow_keyword(&self, keyword: GString,) -> bool {
+    fn is_control_flow_keyword(&self, keyword: GString) -> bool {
         let control_flow_keywords = [
-            "if", "else", "loop", "while", "for", "match",
-            "break", "continue", "return", "yield",
+            "if", "else", "loop", "while", "for", "match", "break", "continue", "return", "yield",
         ];
-
         control_flow_keywords.contains(&keyword.to_string().as_str())
     }
 
@@ -148,7 +148,6 @@ impl IScriptLanguageExtension for RustLanguage {
         _validate_warnings: bool,
         _validate_safe_lines: bool,
     ) -> Dictionary {
-        
         let mut validation = Dictionary::new();
         let errors = run_checks(path.to_string(), "error".to_string());
         if !errors.is_empty() {
@@ -161,7 +160,6 @@ impl IScriptLanguageExtension for RustLanguage {
         validation.insert("functions", functions);
         let warnings = run_checks(path.to_string(), "warning".to_string());
         validation.insert("warnings", warnings);
-        
         validation
     }
 
@@ -170,9 +168,7 @@ impl IScriptLanguageExtension for RustLanguage {
     }
 
     // godot hook to trigger script reload
-    fn reload_all_scripts(&mut self) {
-    }
+    fn reload_all_scripts(&mut self) {}
 
-    fn frame(&mut self) {
-    }
+    fn frame(&mut self) {}
 }
