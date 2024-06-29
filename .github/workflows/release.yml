@@ -28,7 +28,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          name: Rust Syntax Nightly
+          name: Rust Syntax
           files: |
             rust-syntax.zip
           generate_release_notes: true

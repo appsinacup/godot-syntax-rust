@@ -21,12 +21,12 @@ runs:
     - name: Rust Install Nightly
       shell: sh
       run: |
-        rustup install nightly
-        rustup default nightly
-        rustup toolchain install nightly
-        rustup override set nightly
-        rustup component add rust-src --toolchain nightly
-        rustup target add ${{ inputs.arch }} --toolchain nightly
+        #rustup install nightly
+        #rustup default nightly
+        #rustup toolchain install nightly
+        #rustup override set nightly
+        #rustup component add rust-src --toolchain nightly
+        rustup target add ${{ inputs.arch }} # --toolchain nightly
     - name: Build
       shell: sh
       run: |
