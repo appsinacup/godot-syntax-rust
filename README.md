@@ -1,5 +1,7 @@
 # Rust Syntax for Godot
 
+Note: This is still WIP
+
 <p align="center">
 <img src="https://github.com/appsinacup/gdrust-syntax/blob/main/syntax.png?raw=true"/>
 </p>
