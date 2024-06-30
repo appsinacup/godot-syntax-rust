@@ -21,7 +21,7 @@ Note: This is still WIP
 
 -----
 
-Godot Rust Syntax offers support to edit `.rs` files inside the Godot Editor.
+Godot Rust Syntax offers support to edit `.rs` files inside the Godot Editor. Also offers support to view warnings and errors in Rust code directly inside the Godot Editor.
 
 # Installation
 
