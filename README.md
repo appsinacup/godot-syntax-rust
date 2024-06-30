@@ -35,3 +35,30 @@ Godot Rust Syntax offers support to edit `.rs` files inside the Godot Editor.
 - Windows (x86_64, x86_32)
 - macOS (x86-64 + arm64 Universal)
 - Linux (x86_64)
+
+# How to build
+
+Requirements:
+
+- [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html)
+
+1. Update dependencies to latest:
+
+```bash
+cargo update
+```
+
+2. Build the project
+```bash
+cargo build --release
+```
+
+
+3. Copy the output to bin folder of the addon:
+
+Eg. macOS
+```bash
+cp target/release/librust_syntax.dylib demo/addons/rust-syntax/bin/librust_syntax.macos.framework/librust_syntax.macos.dylib
+```
+
+For the correct path to use inside the bin folder, look inside the `demo/addons/rust-syntax.gdextension`.
