@@ -1,0 +1,19 @@
+[configuration]
+
+entry_symbol = "gdext_rust_init"
+compatibility_minimum = 4.2
+
+[libraries]
+
+macos.debug = "bin/libgodot_rust_syntax.macos.framework"
+macos.release = "bin/libgodot_rust_syntax.macos.framework"
+windows.debug.x86_64 = "bin/libgodot_rust_syntax.windows.x86_64-pc-windows-msvc.dll"
+windows.release.x86_64 = "bin/libgodot_rust_syntax.windows.x86_64-pc-windows-msvc.dll"
+windows.debug.x86_32 = "bin/libgodot_rust_syntax.windows.i686-pc-windows-msvc.dll"
+windows.release.x86_32 = "bin/libgodot_rust_syntax.windows.i686-pc-windows-msvc.dll"
+linux.debug.x86_64 = "bin/libgodot_rust_syntax.linux.x86_64-unknown-linux-gnu.so"
+linux.release.x86_64 = "bin/libgodot_rust_syntax.linux.x86_64-unknown-linux-gnu.so"
+
+[icons]
+
+Rust = "res://addons/godot_syntax_rust/Rust.svg"

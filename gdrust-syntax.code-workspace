@@ -5,17 +5,17 @@
 			"path": "../godot"
 		},
 		{
-			"name": "gdrust-syntax",
+			"name": "gdgodot_syntax_rust",
 			"path": "."
 		}
 	],
 	"settings": {
 		"rust-analyzer.linkedProjects": [
-			"../gdrust-syntax/Cargo.toml"
+			"../gdgodot_syntax_rust/Cargo.toml"
 		],
 		"rust-analyzer.showUnlinkedFileNotification": false,
 		"lldb.launch.sourceMap": {
-			"src/": "${workspaceFolder:gdrust-syntax}/src"
+			"src/": "${workspaceFolder:gdgodot_syntax_rust}/src"
 		},
 		"files.associations": {
 			"vector": "cpp",
@@ -54,13 +54,13 @@
 				"program": "${workspaceFolder:godot}/bin/godot.macos.editor.arm64",
 				"type": "cppdbg",
 				"request": "launch",
-				"cwd": "${workspaceFolder:gdrust-syntax}",
+				"cwd": "${workspaceFolder:gdgodot_syntax_rust}",
 				"osx": {
 					"MIMode": "lldb"
 				},
 				"args": [
 					"--path",
-					"${workspaceFolder:gdrust-syntax}/demo",
+					"${workspaceFolder:gdgodot_syntax_rust}/demo",
 					"--debug-collisions",
 					"test.tscn"
 				]
@@ -70,12 +70,12 @@
 				"program": "${workspaceFolder:godot}/bin/godot.macos.editor.arm64",
 				"type": "cppdbg",
 				"request": "launch",
-				"cwd": "${workspaceFolder:gdrust-syntax}",
+				"cwd": "${workspaceFolder:gdgodot_syntax_rust}",
 				"osx": {
 					"MIMode": "lldb"
 				},
 				"args": [
-					"${workspaceFolder:gdrust-syntax}/demo/project.godot"
+					"${workspaceFolder:gdgodot_syntax_rust}/demo/project.godot"
 				]
 			},
 		]

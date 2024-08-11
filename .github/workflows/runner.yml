@@ -38,8 +38,8 @@ jobs:
     steps:
       - uses: actions/upload-artifact/merge@v4
         with:
-          name: rust-syntax
-          pattern: rust-syntax-*
+          name: godot_syntax_rust
+          pattern: godot_syntax_rust-*
 
   release:
     name: Create Release

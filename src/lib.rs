@@ -1,8 +1,9 @@
-use std::sync::Once;
-
-use godot::engine::Engine;
-use godot::engine::ResourceLoader;
-use godot::engine::ResourceSaver;
+use godot::classes::Engine;
+use godot::classes::ResourceFormatLoader;
+use godot::classes::ResourceFormatSaver;
+use godot::classes::ResourceLoader;
+use godot::classes::ResourceSaver;
+use godot::classes::ScriptLanguage;
 use godot::prelude::*;
 use syntax::rust_language::RustLanguage;
 use syntax::rust_resource_loader::RustResourceLoader;
@@ -11,17 +12,6 @@ mod syntax;
 #[derive(GodotClass)]
 #[class(base=Object,init,tool)]
 pub struct RustSyntaxExtensionLibrary {}
-fn get_instance() -> &'static Gd<RustResourceLoader> {
-    static mut INSTANCE: Option<Gd<RustResourceLoader>> = None;
-    static ONCE: Once = Once::new();
-    unsafe {
-        ONCE.call_once(|| {
-            let singleton = RustResourceLoader::new_gd();
-            INSTANCE = Some(singleton);
-        });
-        INSTANCE.as_ref().unwrap()
-    }
-}
 #[gdextension]
 unsafe impl ExtensionLibrary for RustSyntaxExtensionLibrary {
     fn min_level() -> InitLevel {
@@ -29,35 +19,22 @@ unsafe impl ExtensionLibrary for RustSyntaxExtensionLibrary {
     }
 
     fn on_level_init(level: InitLevel) {
-        godot_print!("hello world");
         if level == InitLevel::Scene {
-            let res_loader = get_instance();
+            let res_loader = RustResourceLoader::new_gd();
             let res_saver = RustResourceSaver::new_gd();
             let mut engine = Engine::singleton();
             let lang: Gd<RustLanguage> = RustLanguage::new_alloc();
-            engine.register_script_language(lang.clone().upcast());
-            engine.register_singleton(RustLanguage::class_name().to_string_name(), lang.upcast());
-            ResourceSaver::singleton().add_resource_format_saver(res_saver.clone().upcast());
-            engine.register_singleton(
-                RustResourceSaver::class_name().to_string_name(),
-                res_saver.upcast(),
-            );
-            ResourceLoader::singleton().add_resource_format_loader(res_loader.clone().upcast());
-            engine.register_singleton(
-                RustResourceLoader::class_name().to_string_name(),
-                res_loader.clone().upcast(),
-            );
+            engine.register_script_language(lang.clone().upcast::<ScriptLanguage>());
+            ResourceSaver::singleton()
+                .add_resource_format_saver(res_saver.clone().upcast::<ResourceFormatSaver>());
+            ResourceLoader::singleton()
+                .add_resource_format_loader(res_loader.clone().upcast::<ResourceFormatLoader>());
         }
     }
 
     fn on_level_deinit(level: InitLevel) {
         match level {
-            InitLevel::Scene => {
-                //servers::unregister_scene();
-            }
-            InitLevel::Servers => {
-                //servers::unregister_server();
-            }
+            InitLevel::Scene => {}
             _ => (),
         }
     }

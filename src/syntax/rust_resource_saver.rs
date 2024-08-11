@@ -1,9 +1,9 @@
-use godot::engine::file_access::ModeFlags;
-use godot::engine::global::Error;
-use godot::engine::resource_saver::SaverFlags;
-use godot::engine::FileAccess;
-use godot::engine::IResourceFormatSaver;
-use godot::engine::ResourceFormatSaver;
+use godot::classes::file_access::ModeFlags;
+use godot::classes::resource_saver::SaverFlags;
+use godot::classes::FileAccess;
+use godot::classes::IResourceFormatSaver;
+use godot::classes::ResourceFormatSaver;
+use godot::global::Error;
 use godot::prelude::*;
 
 use crate::syntax::rust_script::Rust;
@@ -16,7 +16,6 @@ pub struct RustResourceSaver {
 impl IResourceFormatSaver for RustResourceSaver {
     fn save(&mut self, resource: Gd<Resource>, path: GString, flags: u32) -> Error {
         let mut script: Gd<Rust> = resource.cast();
-        godot_print!("saving rust script resource to: {}", path);
         if flags as u64 & SaverFlags::CHANGE_PATH.ord() > 0 {
             script.set_path(path.clone());
         }
@@ -36,7 +35,7 @@ impl IResourceFormatSaver for RustResourceSaver {
         resource.try_cast::<Rust>().is_ok()
     }
 
-    fn get_recognized_extensions(&self, resource: Gd<Resource>) -> PackedStringArray {
+    fn get_recognized_extensions(&self, _resource: Gd<Resource>) -> PackedStringArray {
         let mut extensions = PackedStringArray::new();
         extensions.push("rs".into());
         extensions

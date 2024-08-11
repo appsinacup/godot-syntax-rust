@@ -1,7 +1,7 @@
-use godot::engine::file_access::ModeFlags;
-use godot::engine::FileAccess;
-use godot::engine::IResourceFormatLoader;
-use godot::engine::ResourceFormatLoader;
+use godot::classes::file_access::ModeFlags;
+use godot::classes::FileAccess;
+use godot::classes::IResourceFormatLoader;
+use godot::classes::ResourceFormatLoader;
 use godot::prelude::*;
 
 use super::rust_script::Rust;
@@ -15,9 +15,9 @@ impl IResourceFormatLoader for RustResourceLoader {
     fn load(
         &self,
         path: GString,
-        original_path: GString,
-        use_sub_threads: bool,
-        cache_mode: i32,
+        _original_path: GString,
+        _use_sub_threads: bool,
+        _cache_mode: i32,
     ) -> Variant {
         let mut rust_script = Rust::new_gd();
         let handle = match FileAccess::open(path, ModeFlags::READ) {
@@ -26,7 +26,6 @@ impl IResourceFormatLoader for RustResourceLoader {
                 return rust_script.to_variant();
             }
         };
-        //let _ = rust_script.load(&mut handle, original_path, use_sub_threads, cache_mode);
         rust_script.set_source_code(handle.get_as_text());
         rust_script.to_variant()
     }
@@ -38,10 +37,10 @@ impl IResourceFormatLoader for RustResourceLoader {
     }
 
     fn handles_type(&self, type_: StringName) -> bool {
-        type_ == "Rust".into() || type_ == "Resource".into() || type_ == "Script".into()
+        type_ == "Rust".into() || type_ == "Script".into()
     }
 
     fn get_resource_type(&self, path: GString) -> GString {
-        "Rust".into()
+        GString::from("Rust")
     }
 }

@@ -1,4 +1,4 @@
 cargo fmt -- --config-path rustfmt.toml
 cargo clippy --fix --allow-dirty
-cargo build --release
-cp target/release/librust_syntax.dylib demo/addons/rust-syntax/bin/librust_syntax.macos.framework/librust_syntax.macos.dylib
+cargo build
+cp target/debug/libgodot_rust_syntax.dylib demo/addons/godot_syntax_rust/bin/libgodot_rust_syntax.macos.framework/libgodot_rust_syntax.macos.dylib

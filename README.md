@@ -3,11 +3,11 @@
 Note: This is still WIP
 
 <p align="center">
-<img src="https://github.com/appsinacup/gdrust-syntax/blob/main/syntax.png?raw=true" style="height:'512px'; width:'auto'"/>
+<img src="https://github.com/appsinacup/gdgodot_syntax_rust/blob/main/syntax.png?raw=true" style="height:'512px'; width:'auto'"/>
 </p>
 
 <p align="center">
-        <img src="https://github.com/appsinacup/gdrust-syntax/actions/workflows/runner.yml/badge.svg?branch=main"
+        <img src="https://github.com/appsinacup/gdgodot_syntax_rust/actions/workflows/runner.yml/badge.svg?branch=main"
             alt="Godot Rust Syntax"></a>
         <img src="https://img.shields.io/badge/Godot-4.2-%23478cbf?logo=godot-engine&logoColor=white" />
 </p>
@@ -28,7 +28,7 @@ Godot Rust Syntax offers support to edit `.rs` files inside the Godot Editor. Al
 - Automatic (Recommended): Download the plugin from the official [Godot Asset Store](https://godotengine.org/asset-library/asset/2267) using the `AssetLib` tab in Godot:
     - TODO
 
-- Manual: Download the [latest github release](https://github.com/appsinacup/gdrust-syntax/releases/latest) and move only the `addons` folder into your project `addons` folder.
+- Manual: Download the [latest github release](https://github.com/appsinacup/gdgodot_syntax_rust/releases/latest) and move only the `addons` folder into your project `addons` folder.
 
 # Platforms
 
@@ -58,7 +58,7 @@ cargo build --release
 
 Eg. macOS
 ```bash
-cp target/release/librust_syntax.dylib demo/addons/rust-syntax/bin/librust_syntax.macos.framework/librust_syntax.macos.dylib
+cp target/release/libgodot_rust_syntax.dylib demo/addons/godot_syntax_rust/bin/libgodot_rust_syntax.macos.framework/libgodot_rust_syntax.macos.dylib
 ```
 
-For the correct path to use inside the bin folder, look inside the `demo/addons/rust-syntax.gdextension`.
+For the correct path to use inside the bin folder, look inside the `demo/addons/godot_syntax_rust.gdextension`.

@@ -21,11 +21,11 @@ jobs:
         shell: sh
         run: |
           ls target/release
-          mv target/release/rust_syntax.dll demo/addons/rust-syntax/bin/librust_syntax.windows.${{ matrix.arch }}.dll
+          mv target/release/godot_rust_syntax.dll demo/addons/godot_syntax_rust/bin/libgodot_rust_syntax.windows.${{ matrix.arch }}.dll
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: rust-syntax-${{ matrix.arch }}
+          name: godot_syntax_rust-${{ matrix.arch }}
           path: |
             demo/**/*.dll
           if-no-files-found: error

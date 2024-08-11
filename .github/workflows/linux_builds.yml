@@ -30,11 +30,11 @@ jobs:
       - name: Copy to bin
         shell: sh
         run: |
-          mv target/release/librust_syntax.so demo/addons/rust-syntax/bin/librust_syntax.linux.so
+          mv target/release/libgodot_rust_syntax.so demo/addons/godot_syntax_rust/bin/libgodot_rust_syntax.linux.so
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: rust-syntax-${{ matrix.arch}}
+          name: godot_syntax_rust-${{ matrix.arch}}
           path: |
             demo/**/*.so
           if-no-files-found: error

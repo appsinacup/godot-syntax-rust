@@ -5,7 +5,7 @@ fn test1(){
 
 
 fn get_name() -> String {
-	"Rust".;to_string()
+	"Rust".to_string()
 }
 
 fn test() {

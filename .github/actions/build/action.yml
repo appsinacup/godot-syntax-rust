@@ -48,4 +48,4 @@ runs:
         mkdir -p target/release
         rustup target add aarch64-apple-darwin
         cargo build --target=aarch64-apple-darwin --release --features="${{ inputs.features }}" --no-default-features
-        lipo -create -output target/release/librust_syntax.dylib target/aarch64-apple-darwin/release/librust_syntax.dylib target/x86_64-apple-darwin/release/librust_syntax.dylib
+        lipo -create -output target/release/libgodot_rust_syntax.dylib target/aarch64-apple-darwin/release/libgodot_rust_syntax.dylib target/x86_64-apple-darwin/release/libgodot_rust_syntax.dylib

@@ -4,8 +4,8 @@ use std::process::Command;
 
 use godot::builtin::Dictionary;
 use godot::builtin::VariantArray;
-use godot::log::godot_error;
-use godot::log::godot_print;
+use godot::global::godot_error;
+use godot::global::godot_print;
 use godot::meta::ToGodot;
 use serde::Deserialize;
 #[derive(Debug, Deserialize)]
@@ -49,7 +49,7 @@ pub fn run_checks(file_name: String, level: String) -> VariantArray {
     // create current dir folder
     let mut current_dir = Path::new(".");
     if let Some(path) = &path {
-        current_dir = &path;
+        current_dir = path;
     }
     current_folder.push(current_dir);
     godot_print!("{}", current_folder.display());
@@ -86,7 +86,7 @@ pub fn run_checks(file_name: String, level: String) -> VariantArray {
                     for span in span {
                         let mut manifest_folder =
                             manifest_folder.unwrap().to_str().unwrap().to_string();
-                        manifest_folder.push_str(&"/".to_string());
+                        manifest_folder.push('/');
                         manifest_folder.push_str(&span.file_name);
                         let span_filename = manifest_folder;
                         if span_filename == file_name {

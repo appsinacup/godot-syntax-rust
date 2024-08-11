@@ -12,10 +12,10 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: rust-syntax-*
+          pattern: godot_syntax_rust-*
           merge-multiple: true
-          path: rust-syntax
-          name: rust-syntax
+          path: godot_syntax_rust
+          name: godot_syntax_rust
       - name: Delete draft release(s)
         uses: hugo19941994/delete-draft-releases@v1.0.0
         env:
@@ -24,13 +24,13 @@ jobs:
         shell: sh
         run: |
           ls
-          zip -r "rust-syntax.zip" rust-syntax
+          zip -r "godot_syntax_rust.zip" godot_syntax_rust
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           name: Rust Syntax
           files: |
-            rust-syntax.zip
+            godot_syntax_rust.zip
           generate_release_notes: true
           draft: true
           prerelease: true

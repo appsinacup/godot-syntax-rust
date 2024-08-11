@@ -12,7 +12,7 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: rust-syntax-godot
+          name: godot_syntax_rust-godot
           path: |
             demo
           if-no-files-found: error

@@ -1,5 +1,5 @@
 [package]
-name = "rust_syntax"
+name = "godot_rust_syntax"
 version = "0.1.0"
 edition = "2021"
 rust-version = "1.77.1"
@@ -10,7 +10,7 @@ publish = false
 crate-type = ["cdylib"]
 
 [dependencies]
-godot = { git = "https://github.com/godot-rust/gdext", branch = "master", features=["experimental-threads"] }
+godot = { git = "https://github.com/godot-rust/gdext", version = "0.1", branch = "master", features=["experimental-threads", "api-4-2"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 ra_ap_syntax = "0.0"
