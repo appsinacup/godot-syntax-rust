@@ -1,17 +1,17 @@
 {
 	"folders": [
 		{
-			"name": "godot",
-			"path": "../godot"
-		},
-		{
 			"name": "gdgodot_syntax_rust",
 			"path": "."
+		},
+		{
+			"name": "godot",
+			"path": "../godot"
 		}
 	],
 	"settings": {
 		"rust-analyzer.linkedProjects": [
-			"../gdgodot_syntax_rust/Cargo.toml"
+			"Cargo.toml"
 		],
 		"rust-analyzer.showUnlinkedFileNotification": false,
 		"lldb.launch.sourceMap": {
@@ -67,7 +67,7 @@
 			},
 			{
 				"name": "Launch Editor",
-				"program": "${workspaceFolder:godot}/bin/godot.macos.editor.arm64",
+				"program": "${workspaceFolder:godot}/bin/godot.macos.editor.dev.arm64",
 				"type": "cppdbg",
 				"request": "launch",
 				"cwd": "${workspaceFolder:gdgodot_syntax_rust}",

@@ -291,6 +291,7 @@ impl IScriptLanguageExtension for RustLanguage {
         let icon_path = "res://addons/godot_syntax_rust/Rust.svg";
         if !self.icon_registered {
             self.icon_registered = true;
+            let guard = self.base_mut();
             if Engine::singleton().is_editor_hint() && FileAccess::file_exists(icon_path.into()) {
                 let editor_interface = EditorInterface::singleton();
                 let editor_theme = editor_interface.get_editor_theme();
@@ -306,6 +307,7 @@ impl IScriptLanguageExtension for RustLanguage {
                     }
                 }
             }
+            drop(guard);
         }
     }
 

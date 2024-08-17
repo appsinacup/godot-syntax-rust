@@ -57,6 +57,10 @@ pub fn run_checks(file_name: String, level: String) -> VariantArray {
         .args(["clippy", "--message-format=json"])
         .current_dir(&current_folder)
         .output();
+    if !current_folder.exists() {
+        godot_error!("Directory does not exist: {}", current_folder.display());
+        return results;
+    }
     if output.is_err() {
         godot_error!(
             "cargo clippy failed at {}:\n {}",
