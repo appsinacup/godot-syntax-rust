@@ -44,6 +44,6 @@ impl IResourceFormatLoader for RustResourceLoader {
         if path.to_string().ends_with(".rs") {
             return GString::from("Rust");
         }
-        GDString::default()
+        GString::default()
     }
 }

@@ -35,10 +35,7 @@ unsafe impl ExtensionLibrary for RustSyntaxExtensionLibrary {
     }
 
     fn on_level_deinit(level: InitLevel) {
-        match level {
-            InitLevel::Scene => {}
-            _ => (),
-        }
+        if level == InitLevel::Scene {}
     }
 
     fn override_hot_reload() -> Option<bool> {
