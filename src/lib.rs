@@ -6,6 +6,7 @@ use godot::classes::ResourceSaver;
 use godot::classes::ScriptLanguage;
 use godot::prelude::*;
 use syntax::rust_language::RustLanguage;
+use syntax::rust_project_settings::RustProjectSettings;
 use syntax::rust_resource_loader::RustResourceLoader;
 use syntax::rust_resource_saver::RustResourceSaver;
 mod syntax;
@@ -29,6 +30,7 @@ unsafe impl ExtensionLibrary for RustSyntaxExtensionLibrary {
                 .add_resource_format_saver(res_saver.clone().upcast::<ResourceFormatSaver>());
             ResourceLoader::singleton()
                 .add_resource_format_loader(res_loader.clone().upcast::<ResourceFormatLoader>());
+            RustProjectSettings::register_settings();
         }
     }
 

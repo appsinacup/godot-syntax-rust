@@ -1,5 +1,7 @@
 extends Node
 
+@export var script1: Rust
+
 class test:
 	var a: int
 	func abc():
